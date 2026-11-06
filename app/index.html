@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ollama AI Chat App</title>
+</head>
+<body>
+
+  <h2>RAG Chat from Website</h2>
+  <input id="query" placeholder="Ask your question" />
+  <button onclick="ask()">Ask AI</button>
+
+  <div id="answer"></div>
+
+  <script>
+    let sessionId = null;
+async function ask() {
+    if (!sessionId) {
+      sessionId = crypto.randomUUID(); // or Date.now().toString(), or fetch from backend
+    }
+
+    console.log("Sending session_id:", sessionId);
+    const query = document.getElementById('query').value;
+    try {
+        const response = await fetch('http://127.0.0.1:8000/ask/', { 
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: query, session_id: sessionId })
+        });
+
+        if (!response.ok) {
+            // Server returned error status
+            const errorText = await response.text();
+            throw new Error(`Server error: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json();
+        document.getElementById('answer').innerText = data.response;
+
+    } catch (err) {
+        console.error('Fetch error:', err);
+        document.getElementById('answer').innerText = 'Error: ' + err.message;
+    }
+}
+</script>
+
+</body>
+</html>

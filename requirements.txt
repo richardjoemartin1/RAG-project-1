@@ -1,0 +1,24 @@
+fastapi
+uvicorn[default]
+requests
+langchain
+langchain_core
+langchain_ollama
+langchain_redis
+redis
+python-dotenv
+chromadb
+nomic
+sentence-transformers
+transformers
+torch
+beautifulsoup4
+langchain-huggingface
+#pip install -U langchain-ollama
+#pip install transformers torch
+#pip install beautifulsoup4
+#go to https://www.whatismybrowser.com/detect/what-is-my-user-agent and copy the user agent string
+#pip install -U langchain-chroma
+#pip install azure-identity
+#openai
+azure-identity
